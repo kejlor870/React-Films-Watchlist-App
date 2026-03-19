@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    background-color: #0D253F;
+    color: #FFF;
+}
+
+.header{
+    background-color: #112B4A;
+    color: #FFFF;
+}
+
+.navBtn{
+    background-color: #01b3e425;
+}
+
+.footer{
+    background-color: #081A2C;
+}
+
+.borderCard{
+    border: 2px solid #01B4E4;
+}
+.publicateDate{
+    color: #D0D0D0;
+}
+
+.searchBox{
+    background-color: #01b3e41a;
+}
