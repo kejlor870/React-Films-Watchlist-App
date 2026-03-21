@@ -1,20 +1,29 @@
 import React from "react";
 
-function Card({ title="Title", publDate="Publ. Date" }){
+const defaultImage = "https://images.unsplash.com/photo-1495745966610-2a67f2297e5e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fHww";
+
+function Card({ title="Title", publDate="Publ. Date", imgSrc, originalLanguage="-" }){
     
     return(
-        <div className="borderCard rounded-2xl shadow-md shadow-cyan-500 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500 transition-all duration-500" style={{ height: "401px", width: "234px" }}>
+        <div className="borderCard relative rounded-2xl shadow-md shadow-cyan-500 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500 transition-all duration-500" style={{ height: "401px", width: "234px" }}>
+            <div 
+                className="absolute top-2 left-2 bg-slate-400 bg-opacity-40 border border-slate-100 border-opacity-20 rounded-md px-2 cursor-default"
+                title="Original language"
+            >
+                { originalLanguage.toUpperCase() }
+            </div>
             <img 
-                src="https://images.unsplash.com/photo-1495745966610-2a67f2297e5e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fHww"
+                src={ imgSrc ? imgSrc : defaultImage }
+                alt={`Poster of ${title}`}
                 style={{ height: "326px", width: "234px" }}
                 className="rounded-xl"
                 loading="lazy"
             />
-            
+
             <div className="px-3 py-2 flex flex-wrap justify-between">
                 {/* Title and relase date */}
                 <div className="flex-1">
-                    <h3 className="font-medium">
+                    <h3 className="font-medium line-clamp-1">
                         { title }
                     </h3>
                     <p className="publicateDate">
