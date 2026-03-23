@@ -57,8 +57,6 @@ function SearchPage(){
         fetchMovies();
     };
 
-    console.log(query.type);
-
     // if(isLoading){
     //     return(
     //         <div className="text-center text-xl font-thin animate-pulse">
@@ -120,6 +118,7 @@ function SearchPage(){
                             publDate={ movie.release_date }
                             imgSrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                             originalLanguage={ movie.original_language }
+                            movieData={ movie }
                         />
                     ))}
 
