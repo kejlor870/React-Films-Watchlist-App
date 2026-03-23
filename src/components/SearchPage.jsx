@@ -121,8 +121,6 @@ function SearchPage(){
                             movieData={ movie }
                         />
                     ))}
-
-                    <Card />
                 </section>
             }
         </div>

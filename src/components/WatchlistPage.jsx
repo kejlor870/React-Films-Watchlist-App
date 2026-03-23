@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Card from "./Card";
+import { useWatchlist } from "../context/WatchlistContext";
 
 function WatchlistPage(){
+    const { userWatchlist } = useWatchlist();
+
+    console.log(userWatchlist);
 
     return(
        <div>
@@ -11,10 +15,28 @@ function WatchlistPage(){
                 </h1>
             </section>
         
-            <section className="max-w-6xl mx-auto px-4 py-5 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
-                <Card />
-                <Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card /><Card />
-            </section>
+            {userWatchlist.length > 0 ? 
+                (
+                    <section className="max-w-6xl mx-auto px-4 py-5 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
+                        {userWatchlist.map((movie, index) => (
+                            <Card 
+                                key={ movie.id }
+                                title={ movie.title }
+                                publDate={ movie.release_date }
+                                imgSrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                                originalLanguage={ movie.original_language }
+                                movieData={ movie }
+                            />
+                        ))}
+                    </section>
+                )
+                :
+                (
+                    <p className="text-center text-lg font-light mt-10"> 
+                        Your watchlist is EMPTY! <br/>Go back to Search film and add some movies. 
+                    </p>
+                )
+            }
         </div>
     );
 }

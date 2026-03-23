@@ -52,7 +52,7 @@ function Card({ title="Title", publDate="Publ. Date", imgSrc, originalLanguage="
                 <div className="flex items-center">
                     <button
                         type="button"
-                        className="hover:scale-110 transition-all"
+                        className="hover:scale-110 active:scale-95 transition-all"
                         onClick={ handleSaveBtn }
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill={isMovieSaved ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">

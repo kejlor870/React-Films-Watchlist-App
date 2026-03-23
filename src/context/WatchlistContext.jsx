@@ -11,7 +11,6 @@ export const WatchlistProvider = ({ children }) => {
     // Saving userWatchlist to localstorage on every change
     useEffect(() => {
         localStorage.setItem('userWatchlistFWApp', JSON.stringify(userWatchlist));
-        console.log(userWatchlist);
     }, [userWatchlist]);
 
     // Function: Adding movie to user saved list
