@@ -17,6 +17,10 @@ body{
     background-color: #01b3e425;
 }
 
+.navBtnSub:hover{
+    background-color: #112B4A;
+}
+
 .footer{
     background-color: #081A2C;
 }

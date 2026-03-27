@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function HeaderNav(){
-    const navLinkStyle = "navBtn px-4 py-2 rounded-md shadow-md shadow-cyan-900 hover:shadow-cyan-800 hover:scale-105 hover:shadow-xl transition-all duration-500";
+    const navLinkStyle = "navBtn px-4 py-2 rounded-md shadow-md shadow-cyan-900 hover:shadow-cyan-800 hover:scale-105 hover:shadow-xl active:scale-95 active:duration-200 transition-all duration-500";
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     return(
         <header className="header flex flex-wrap px-6 py-6 items-center justify-between rounded-b-xl">
@@ -20,7 +23,36 @@ function HeaderNav(){
             
             <nav className="flex flex-wrap gap-6 text-xl">
                 <Link to={'/'} className={ navLinkStyle }> Search film </Link>
-                <Link to={'/watchlist'} className={ navLinkStyle }> Watchlist </Link>
+
+                {user ? 
+                    <div className="relative group mt-2">
+                        <Link to="/watchlist" className={ navLinkStyle }>Watchlist</Link>
+
+                        <div className="absolute -left-12 mt-3 w-40 text-right header rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                            <ul>
+                                <li 
+                                    className="px-4 py-2 hover:bg-sky-900 rounded-t-md cursor-pointer" 
+                                    onClick={() => navigate("/profile")}
+                                >
+                                    Profil
+                                </li>
+                                <li 
+                                    className="px-4 py-2 hover:bg-sky-900 cursor-pointer" 
+                                    onClick={() => navigate("/watchlist")}
+                                >
+                                    Watchlist
+                                </li>
+                                <li className="px-4 py-2 hover:bg-sky-900 rounded-b-md text-red-400 font-semibold border-t-2 border-white border-opacity-15 cursor-pointer">
+                                    <button onClick={() => logout()}>
+                                        Logout
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    :
+                    <Link to={'/login'} className={ navLinkStyle }> Login </Link>
+                }
             </nav>
         </header>
     );

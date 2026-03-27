@@ -5,10 +5,13 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import WatchlistPage from './components/WatchlistPage';
 import HeaderNav from './components/Header/HeaderNav';
 import { WatchlistProvider } from './context/WatchlistContext';
+import { AuthProvider } from './context/AuthContext';
+import LoginPage from './components/LoginPage';
 
 function App() {
 
   return (
+    <AuthProvider>
     <WatchlistProvider>
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
@@ -19,6 +22,10 @@ function App() {
           <Routes>
             <Route path='/' element={ <SearchPage /> }/>
             <Route path='/watchlist' element={ <WatchlistPage /> }/>
+            <Route path='/login' element={ <LoginPage /> } />
+
+            {/* NOT FOUND */}
+            <Route path='*' element={ <p> 404 - NOT FOUND </p> } />
           </Routes>
         </main>
         
@@ -37,6 +44,7 @@ function App() {
       </div>
     </BrowserRouter>
     </WatchlistProvider>
+    </AuthProvider>
   )
 }
 

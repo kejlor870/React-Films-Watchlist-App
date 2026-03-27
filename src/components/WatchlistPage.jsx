@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Card from "./Card";
 import { useWatchlist } from "../context/WatchlistContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function WatchlistPage(){
     const { userWatchlist } = useWatchlist();
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     console.log(userWatchlist);
 
+    if(!user) return navigate("/");
     return(
        <div>
             <section className="max-w-7xl mx-auto my-4">

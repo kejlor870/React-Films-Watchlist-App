@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { useAuth } from "../context/AuthContext";
 
 function SearchPage(){
     const [movies, setMovies] = useState([]);
@@ -57,13 +58,7 @@ function SearchPage(){
         fetchMovies();
     };
 
-    // if(isLoading){
-    //     return(
-    //         <div className="text-center text-xl font-thin animate-pulse">
-    //             Trwa ładowanie danych...
-    //         </div>
-    //     );
-    // }
+
     return(
         <div>
             <section className="flex flex-wrap justify-between mx-10">

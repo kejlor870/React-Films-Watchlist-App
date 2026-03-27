@@ -1,14 +1,21 @@
 import React from "react";
 import { useWatchlist } from "../context/WatchlistContext";
+import { useAuth } from "../context/AuthContext";
 
 const defaultImage = "https://images.unsplash.com/photo-1495745966610-2a67f2297e5e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fHww";
 
 function Card({ title="Title", publDate="Publ. Date", imgSrc, originalLanguage="-", movieData }){
     const { addToWatchlist, removeFromWatchlist, isInWatchlist } = useWatchlist();
     const isMovieSaved = isInWatchlist(movieData?.id);
+    const { user } = useAuth();
 
     // Fucntion: handle save to watchlist after click bookmark
     const handleSaveBtn = () => {
+        if(!user){
+            alert("You must be logedin to bookmark movies.");
+            return;
+        }
+
         if(isMovieSaved){
             // If movie is saved => remove it from watchlist
             removeFromWatchlist(movieData.id);
@@ -55,7 +62,7 @@ function Card({ title="Title", publDate="Publ. Date", imgSrc, originalLanguage="
                         className="hover:scale-110 active:scale-95 transition-all"
                         onClick={ handleSaveBtn }
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill={isMovieSaved ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill={isMovieSaved && user ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-7">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                         </svg>
                     </button>
