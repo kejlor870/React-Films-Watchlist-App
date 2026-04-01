@@ -33,32 +33,40 @@ function SearchPage(){
     }, []);
 
     // Search
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-
-        // Empty query
+    useEffect(() => {
         if(!query.trim()){
             setMovies(popular);
             return;
         }
 
-        const fetchMovies = async () => {
-            setIsLoading(true);
-            try{
-                const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&language=pl-PL`);
-                const data = await response.json();
+        setIsLoading(true);
 
-                if(data) setMovies(data.results);
-            }catch(err){
-                console.log("ERROR: ", err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+        const delayDebounce = setTimeout(() => {
+            const fetchMovies = async () => {
+                try{
+                    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&language=pl-PL`);
+                    const data = await response.json();
 
-        fetchMovies();
+                    if(data) setMovies(data.results);
+                }catch(err){
+                    console.log("ERROR: ", err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            fetchMovies();
+        }, 500);
+
+        return () => clearTimeout(delayDebounce);
+    }, [query]);
+
+    // Form X clear
+    const handleFormClear = () => {
+        setQuery("");
+        setMovies(popular);
+        setIsLoading(false);
     };
-
 
     return(
         <div>
@@ -66,7 +74,7 @@ function SearchPage(){
                 {/* Search */}
                 <div className="searchBox px-4 py-3 rounded-xl w-fit flex gap-2 shadow-sm shadow-cyan-700">
                     <form 
-                        onSubmit={ handleSearchSubmit }
+                        onSubmit={(e) => e.preventDefault()}
                         className="flex flex-wrap"
                     >
                         <label htmlFor="titleInput" className="font-thin text-lg flex items-center gap-1 me-2">
@@ -83,6 +91,15 @@ function SearchPage(){
                             onChange={(e) => setQuery(e.target.value)}
                             autoComplete="off"
                         />
+                        {query && 
+                            <button
+                                type="button"
+                                className="px-2 ml-2 text-sm border border-gray-200 rounded-lg hover:border-gray-500 transition-all"
+                                onClick={ handleFormClear }
+                            >
+                                ✕
+                            </button>
+                        }
                     </form>
                 </div>
 
@@ -104,7 +121,7 @@ function SearchPage(){
             <section className="max-w-6xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
                 {isLoading ? 
                     <>
-                        {Array.from({ length: 4 }).map((_, i) => (
+                        {Array.from({ length: 8 }).map((_, i) => (
                             <SkeletonCard key={i}/>
                         ))}
                     </>

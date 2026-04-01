@@ -5,7 +5,7 @@ const defaultImage = "https://images.unsplash.com/photo-1495745966610-2a67f2297e
 function SkeletonCard(){
 
     return(
-        <div className="border-2 border-slate-300 text-slate-100 text-opacity-5 border-opacity-5 opacity-5 relative animate-pulse rounded-2xl" style={{ height: "401px", width: "234px" }}>
+        <div className="border-2 border-slate-300 text-slate-100 text-opacity-20 border-opacity-5 opacity-5 relative animate-pulse rounded-2xl" style={{ height: "401px", width: "234px" }}>
             <div 
                 className="absolute opacity-20 top-2 left-2 bg-slate-400 bg-opacity-40 border border-slate-100 border-opacity-20 rounded-md px-2 cursor-default"
                 title="Original language"
@@ -26,8 +26,8 @@ function SkeletonCard(){
                     >
                         #####
                     </h3>
-                    <p className="publicateDate">
-                        ##.##.####
+                    <p>
+                        ####-##-##
                     </p>
                 </div>
 
