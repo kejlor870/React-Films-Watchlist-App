@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { useAuth } from "../context/AuthContext";
+import SkeletonCard from "./SkeletonCard";
 
 function SearchPage(){
     const [movies, setMovies] = useState([]);
@@ -100,24 +101,28 @@ function SearchPage(){
                 </div>
             </section>
         
-            {isLoading ? 
-                <div className="text-center text-xl font-thin animate-pulse mt-10">
-                    Trwa ładowanie danych...
-                </div>
-                :
-                <section className="max-w-6xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
-                    {movies.map((movie, index) => (
-                        <Card 
-                            key={ movie.id }
-                            title={ movie.title }
-                            publDate={ movie.release_date }
-                            imgSrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                            originalLanguage={ movie.original_language }
-                            movieData={ movie }
-                        />
-                    ))}
-                </section>
-            }
+            <section className="max-w-6xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
+                {isLoading ? 
+                    <>
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <SkeletonCard key={i}/>
+                        ))}
+                    </>
+                    :
+                    <>
+                        {movies.map((movie, index) => (
+                            <Card 
+                                key={ movie.id }
+                                title={ movie.title }
+                                publDate={ movie.release_date }
+                                imgSrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                                originalLanguage={ movie.original_language }
+                                movieData={ movie }
+                            />
+                        ))}
+                    </>   
+                }
+            </section>
         </div>
     );
 }
