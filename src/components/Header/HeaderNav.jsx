@@ -26,9 +26,11 @@ function HeaderNav(){
 
                 {user ? 
                     <div className="relative group mt-2">
-                        <Link to="/watchlist" className={ navLinkStyle }>Watchlist</Link>
+                        <Link to="/watchlist" className={ navLinkStyle }>
+                            Watchlist
+                        </Link>
 
-                        <div className="absolute -left-12 mt-3 w-40 text-right header rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                        <div className="absolute -left-12 mt-3 w-40 text-right header rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                             <ul>
                                 <li 
                                     className="px-4 py-2 hover:bg-sky-900 rounded-t-md cursor-pointer" 

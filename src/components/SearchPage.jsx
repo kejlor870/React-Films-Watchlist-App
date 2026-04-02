@@ -9,6 +9,7 @@ function SearchPage(){
     const [query, setQuery] = useState("");
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY; // API KEY
     const [isLoading, setIsLoading] = useState(true);
+    const [sortType, setSortType] = useState("");
 
     // Fetch popular movies for main page
     useEffect(() => {
@@ -32,7 +33,7 @@ function SearchPage(){
         fetchMovies();
     }, []);
 
-    // Search
+    // --------- Search -----------
     useEffect(() => {
         if(!query.trim()){
             setMovies(popular);
@@ -67,6 +68,23 @@ function SearchPage(){
         setMovies(popular);
         setIsLoading(false);
     };
+
+    // ------- Sort by ---------
+    const sortedMovies = [...movies].sort((a, b) => {
+        switch(sortType){
+            case "title-asc":
+                return a.title.localeCompare(b.title);
+            case "title-desc":
+                return b.title.localeCompare(a.title);
+            case "date-desc":
+                return new Date(b.release_date || 0) - new Date(a.release_date || 0);
+            case "date-asc":
+                return new Date(a.release_date || 0) - new Date(b.release_date || 0);
+            
+            default:
+                return 0;
+        }
+    });
 
     return(
         <div>
@@ -110,10 +128,14 @@ function SearchPage(){
                     </label>
                     <select
                         id="sortSelect"
+                        onChange={(e) => setSortType(e.target.value)}
                         className="rounded-md min-w-20 bg-transparent text-center hover:cursor-pointer"
                     >
-                        <option> Title </option>
-                        <option> Date </option>
+                        <option value=""> Popular </option>
+                        <option value="title-asc"> Title A-Z </option>
+                        <option value="title-desc"> Title Z-A </option>
+                        <option value="date-desc"> Newest </option>
+                        <option value="date-asc"> Oldest </option>
                     </select>
                 </div>
             </section>
@@ -127,7 +149,7 @@ function SearchPage(){
                     </>
                     :
                     <>
-                        {movies.map((movie, index) => (
+                        {sortedMovies.map((movie, index) => (
                             <Card 
                                 key={ movie.id }
                                 title={ movie.title }

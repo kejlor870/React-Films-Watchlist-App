@@ -35,3 +35,7 @@ body{
 .searchBox{
     background-color: #01b3e41a;
 }
+
+select option{
+    background-color: #112B4A;
+}
